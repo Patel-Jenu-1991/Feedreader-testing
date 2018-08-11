@@ -134,7 +134,7 @@ $(function() {
         });
         it('ensures the content actually changes', function(done) {
           // ensure feed container won't be the same again
-          expect(currentFeedSelection).not.toBe(newFeedSelection);
+          expect(newFeedSelection).not.toBe(currentFeedSelection);
           done();
         });
     })
