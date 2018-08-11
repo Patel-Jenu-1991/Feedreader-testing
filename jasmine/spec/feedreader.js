@@ -47,6 +47,15 @@ $(function() {
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+        it('have a name and is not empty', function() {
+          // Inspect the name property of each RSS feed in turn
+          allFeeds.forEach(function (feed) {
+            // expect the name of each RSS feed to be defined
+            expect(feed.name).toBeDefined();
+            // expect the name of each RSS feed not to be empty
+            expect(feed.name).not.toBe('');
+          });
+        });
     });
 
 
