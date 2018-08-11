@@ -80,7 +80,7 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-        it('should toggle visibility when the menu icon is clicked', function () {
+        it('should toggle visibility when the menu icon is clicked', function() {
           // simulate a click event on the menu icon
           $('.menu-icon-link').click();
           // expect the menu to be visible
@@ -115,9 +115,27 @@ $(function() {
     });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
-
+    describe('New Feed Selection', function() {
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        // define variables to hold the feed selection
+        // can't have the tests to be interdependent so let's have it here
+        let currentFeedSelection, newFeedSelection;
+        beforeEach(function(done) {
+          // load new feeds to change the content
+          loadFeed(2, done);
+          // grab current feeds
+          currentFeedSelection = $('.feed .entry');
+          loadFeed(3, done);
+          // grab new feeds
+          newFeedSelection = $('.feed .entry');
+        });
+        it('ensures the content actually changes', function(done) {
+          // ensure feed container won't be the same again
+          expect(currentFeedSelection).not.toBe(newFeedSelection);
+          done();
+        });
+    })
 }());
