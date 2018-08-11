@@ -109,7 +109,7 @@ $(function() {
         });
         it('gets at least one entry into the feed container', function(done) {
           // expect the feed container to have at least one entry
-          expect($('.feed .entry').size() >= 1).toBeTruthy();
+          expect($('.feed .entry').size() >= 1).toBe(true);
           done(); // make sure to invoke the callback to avoid Timeout error
         });
     });
