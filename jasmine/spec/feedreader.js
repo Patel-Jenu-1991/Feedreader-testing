@@ -19,7 +19,8 @@ $(function() {
          * empty. Experiment with this before you get started on
          * the rest of this project. What happens when you change
          * allFeeds in app.js to be an empty array and refresh the
-         * page?
+         * page? Setting allFeeds to be an empty array make the tests
+         * fail. The RSS feeds don't show up on the index.html web page
          */
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
