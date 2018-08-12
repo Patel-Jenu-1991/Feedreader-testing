@@ -35,12 +35,12 @@ $(
          */
       it('have a URL and is not empty', function() {
         // Inspect the url property of each RSS feed in turn
-        allFeeds.forEach(function(feed) {
+        for (const feed of allFeeds) {
           // expect the URL of each RSS feed to be defined
           expect(feed.url).toBeDefined();
           // expect the URL of each RSS feed not to be empty
           expect(feed.url).not.toBe('');
-        });
+        }
       });
 
       /* TODO: Write a test that loops through each feed
@@ -49,12 +49,12 @@ $(
          */
       it('have a name and is not empty', function() {
         // Inspect the name property of each RSS feed in turn
-        allFeeds.forEach(function(feed) {
+        for (const feed of allFeeds) {
           // expect the name of each RSS feed to be defined
           expect(feed.name).toBeDefined();
           // expect the name of each RSS feed not to be empty
           expect(feed.name).not.toBe('');
-        });
+        }
       });
     });
 
