@@ -92,13 +92,6 @@ $(
       });
     });
 
-    // define variables to hold error messages
-    let errors = {
-      arrayIndexOutOfBounds: `\nNote: loadFeed may only accept numbers 0 to 3 inclusive.\nPlease try again!`,
-      undefinedVariables:
-        'Error: Check for undefined variables. Please try again!\nCannot ensure content actually changes upon New Feed Selection!'
-    };
-
     /* TODO: Write a new test suite named 'Initial Entries' */
     describe('Initial Entries', function() {
       /* TODO: Write a test that ensures when the loadFeed
@@ -114,7 +107,7 @@ $(
           loadFeed(1, done);
         } catch (error) {
           // Handle errors gracefully
-          alert(`${error}${errors.arrayIndexOutOfBounds}`);
+          alert(`${error}${arrayIndexOutOfBounds}`);
         }
       });
       it('gets at least one entry into the feed container', function(done) {
@@ -143,7 +136,7 @@ $(
           // grab new feeds
           newFeedSelection = $('.feed .entry');
         } catch (error) {
-          alert(`${error}${errors.arrayIndexOutOfBounds}`);
+          alert(`${error}${arrayIndexOutOfBounds}`);
         }
       });
       it('ensures the content actually changes', function(done) {
@@ -152,7 +145,7 @@ $(
           currentFeedSelection === undefined ||
           newFeedSelection === undefined
         ) {
-          alert(errors.undefinedVariables);
+          alert(undefinedVariables);
         } else {
           // ensure feed container won't be the same again
           expect(newFeedSelection).not.toBe(currentFeedSelection);
