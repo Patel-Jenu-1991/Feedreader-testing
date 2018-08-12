@@ -6,6 +6,8 @@
  * jQuery.
  */
 
+'use strict';
+
 // The names and URLs to all of the feeds we'd like available.
 const allFeeds = [
   {
@@ -24,11 +26,15 @@ const allFeeds = [
 ];
 
 // define letiables to hold error messages
-let {arrayIndexOutOfBounds, undefinedVariables} = {
+let {arrayIndexOutOfBounds, undefinedVariables, noEntry} = {
   arrayIndexOutOfBounds: `\nNote: loadFeed may only accept numbers 0 to 3 inclusive.\nPlease try again!`,
   undefinedVariables:
-    'Error: Check for undefined letiables. Please try again!\nCannot ensure content actually changes upon New Feed Selection!'
+    'Error: Check for undefined variables. Please try again!\nCannot ensure content actually changes upon New Feed Selection!',
+  noEntry: 'No entries were found!'
 };
+
+// define variables to hold the feed selection
+let currentFeedSelection, newFeedSelection;
 
 /* This function starts up our application. The Google Feed
  * Reader API is loaded asynchonously and will then call this
@@ -138,3 +144,32 @@ $(function() {
         $('body').toggleClass('menu-hidden');
     });
 }());
+
+/**
+ * @description Loads new feed selections,
+ * Helper function to 'New Feed Selection' test suite
+ * @param {function} done - callback to avoid Timeout error
+ */
+function getFeeds(done) {
+  try {
+    // load new feeds to change the content
+    loadFeed(2, function() {
+      // grab current feeds
+      currentFeedSelection = $('.feed').html();
+      console.log(currentFeedSelection);
+      try {
+        loadFeed(3, function() {
+          // grab new feeds
+          newFeedSelection = $('.feed').html();
+          console.log(newFeedSelection);
+          done();
+        });
+      } catch (error) {
+        alert(`${error}${arrayIndexOutOfBounds}`);
+      }
+      done();
+    });
+  } catch (error) {
+    alert(`${error}${arrayIndexOutOfBounds}`);
+  }
+}

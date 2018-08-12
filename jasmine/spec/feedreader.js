@@ -107,12 +107,18 @@ $(
           loadFeed(1, done);
         } catch (error) {
           // Handle errors gracefully
+          done();
           alert(`${error}${arrayIndexOutOfBounds}`);
         }
       });
       it('gets at least one entry into the feed container', function(done) {
         // expect the feed container to have at least one entry
-        expect($('.feed .entry').size() >= 1).toBe(true);
+        let entries = $('.feed .entry').size();
+        if (entries === 0) {
+          alert(noEntry);
+        } else {
+          expect(entries >= 1).toBe(true);
+        }
         done(); // make sure to invoke the callback to avoid Timeout error
       });
     });
@@ -123,26 +129,14 @@ $(
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-      // define variables to hold the feed selection
-      // can't have the tests to be interdependent so let's have it here
-      let currentFeedSelection, newFeedSelection;
+      // get feeds to simulate changes
       beforeEach(function(done) {
-        try {
-          // load new feeds to change the content
-          loadFeed(2, done);
-          // grab current feeds
-          currentFeedSelection = $('.feed .entry');
-          loadFeed(3, done);
-          // grab new feeds
-          newFeedSelection = $('.feed .entry');
-        } catch (error) {
-          alert(`${error}${arrayIndexOutOfBounds}`);
-        }
+        getFeeds(done);
       });
       it('ensures the content actually changes', function(done) {
         // make sure feed selection is defined prior to running test
         if (
-          currentFeedSelection === undefined ||
+          currentFeedSelection === undefined &&
           newFeedSelection === undefined
         ) {
           alert(undefinedVariables);
