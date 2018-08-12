@@ -156,20 +156,20 @@ function getFeeds(done) {
     loadFeed(2, function() {
       // grab current feeds
       currentFeedSelection = $('.feed').html();
-      console.log(currentFeedSelection);
       try {
         loadFeed(3, function() {
           // grab new feeds
           newFeedSelection = $('.feed').html();
-          console.log(newFeedSelection);
           done();
         });
       } catch (error) {
+        done();
         alert(`${error}${arrayIndexOutOfBounds}`);
       }
       done();
     });
   } catch (error) {
+    done();
     alert(`${error}${arrayIndexOutOfBounds}`);
   }
 }
