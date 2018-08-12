@@ -96,18 +96,38 @@ $(
     describe('New Feed Selection', function() {
       // get feeds to simulate changes
       beforeEach(function(done) {
-        getFeeds(done);
+        try {
+          // load new feeds to change the content
+          loadFeed(2, function() {
+            // grab current feeds
+            prevFeedData = $('.feed').html();
+            try {
+              loadFeed(3, function() {
+                // grab new feeds
+                newFeedData = $('.feed').html();
+                done();
+              });
+            } catch (error) {
+              done();
+              alert(`${error}${arrayIndexOutOfBounds}`);
+            }
+            done();
+          });
+        } catch (error) {
+          done();
+          alert(`${error}${arrayIndexOutOfBounds}`);
+        }
       });
       it('ensures the content actually changes', function(done) {
         if (
-          currentFeedSelection === undefined &&
-          newFeedSelection === undefined
+          prevFeedData === undefined &&
+          newFeedData === undefined
         ) {
           // make sure feed selection is defined prior to running test
           alert(undefinedVariables);
         } else {
           // expect feed container to not be the same again
-          expect(newFeedSelection).not.toBe(currentFeedSelection);
+          expect(newFeedData).not.toBe(prevFeedData);
         }
         done();
       });

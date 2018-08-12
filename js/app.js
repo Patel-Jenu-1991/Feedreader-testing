@@ -34,7 +34,7 @@ let {arrayIndexOutOfBounds, undefinedVariables, noEntry} = {
 };
 
 // define variables to hold the feed selection
-let currentFeedSelection, newFeedSelection;
+let prevFeedData, newFeedData;
 
 /* This function starts up our application. The Google Feed
  * Reader API is loaded asynchonously and will then call this
@@ -144,32 +144,3 @@ $(function() {
         $('body').toggleClass('menu-hidden');
     });
 }());
-
-/**
- * @description Loads new feed selections,
- * Helper function to 'New Feed Selection' test suite
- * @param {function} done - callback to avoid Timeout error
- */
-function getFeeds(done) {
-  try {
-    // load new feeds to change the content
-    loadFeed(2, function() {
-      // grab current feeds
-      currentFeedSelection = $('.feed').html();
-      try {
-        loadFeed(3, function() {
-          // grab new feeds
-          newFeedSelection = $('.feed').html();
-          done();
-        });
-      } catch (error) {
-        done();
-        alert(`${error}${arrayIndexOutOfBounds}`);
-      }
-      done();
-    });
-  } catch (error) {
-    done();
-    alert(`${error}${arrayIndexOutOfBounds}`);
-  }
-}
