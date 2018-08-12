@@ -83,12 +83,12 @@ $(
         $('.menu-icon-link').click();
         // expect the menu to be visible
         // (ensure .menu-hidden is removed from the body)
-        expect($('body').attr('class')).not.toBe('menu-hidden');
+        expect($('body').hasClass('menu-hidden')).not.toBe(true);
         // comment the following lines to make menu visible
         // re-simulate a click event on the menu icon
         $('.menu-icon-link').click();
         // expect the menu to be hidden again
-        expect($('body').attr('class')).toBe('menu-hidden');
+        expect($('body').hasClass('menu-hidden')).toBe(true);
       });
     });
 
