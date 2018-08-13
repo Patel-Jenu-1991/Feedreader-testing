@@ -37,6 +37,8 @@ $(
       });
     });
 
+    // select DOM elements to work with
+    const body = document.querySelector('body');
     /* 'The menu' test suite ensures the menu element is
      * hidden by default and that it toggles visibility
      * when the menu icon is clicked.
@@ -45,7 +47,7 @@ $(
       // ensure the menu element is hidden by default
       it('is hidden by default', function() {
         // expect the body to have a class of menu-hidden
-        expect($('body.menu-hidden')).toBeDefined();
+        expect(body.classList.contains('menu-hidden')).toBe(true);
       });
 
       // ensure the visibility is toggled when the menu icon is clicked
@@ -54,12 +56,12 @@ $(
         $('.menu-icon-link').click();
         // expect the menu to be visible
         // (expect .menu-hidden is removed from the body)
-        expect($('body').hasClass('menu-hidden')).not.toBe(true);
+        expect(body.classList.contains('menu-hidden')).not.toBe(true);
         // comment the following lines to make menu visible
         // re-simulate a click event on the menu icon
         $('.menu-icon-link').click();
         // expect the menu to be hidden again
-        expect($('body').hasClass('menu-hidden')).toBe(true);
+        expect(body.classList.contains('menu-hidden')).toBe(true);
       });
     });
 
