@@ -86,7 +86,7 @@ $(
       // before running any tests in this suite
       beforeEach(function(done) {
         try {
-          loadFeed(9, function() {
+          loadFeed(1, function() {
             // Get the number of entries
             entries = document.querySelectorAll('.feed .entry').length;
             done();
