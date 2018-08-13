@@ -38,7 +38,9 @@ $(
     });
 
     // select DOM elements to work with
-    const body = document.querySelector('body');
+    const body = document.querySelector('body'),
+          menuIcon = document.querySelector('.menu-icon-link'),
+          feed = document.querySelector('.feed');
     /* 'The menu' test suite ensures the menu element is
      * hidden by default and that it toggles visibility
      * when the menu icon is clicked.
@@ -53,13 +55,13 @@ $(
       // ensure the visibility is toggled when the menu icon is clicked
       it('should toggle visibility when the menu icon is clicked', function() {
         // simulate a click event on the menu icon
-        $('.menu-icon-link').click();
+        menuIcon.click();
         // expect the menu to be visible
         // (expect .menu-hidden is removed from the body)
         expect(body.classList.contains('menu-hidden')).not.toBe(true);
         // comment the following lines to make menu visible
         // re-simulate a click event on the menu icon
-        $('.menu-icon-link').click();
+        menuIcon.click();
         // expect the menu to be hidden again
         expect(body.classList.contains('menu-hidden')).toBe(true);
       });
@@ -67,9 +69,11 @@ $(
 
     // define letiables to hold error messages
     let {arrayIndexOutOfBounds, undefinedVariables, noEntry} = {
-      arrayIndexOutOfBounds: `\nNote: loadFeed may only accept numbers 0 to 3 inclusive.\nPlease try again!`,
+      arrayIndexOutOfBounds: '\nNote: loadFeed may only accept numbers 0 to 3 '
+        + 'inclusive.\nPlease try again!',
       undefinedVariables:
-        'Error: Check for undefined variables. Please try again!\nCannot ensure content actually changes upon New Feed Selection!',
+        'Error: Check for undefined variables. Please try again!'
+        + '\nCannot ensure content actually changes upon New Feed Selection!',
       noEntry: 'No entries were found!'
     };
 
@@ -77,20 +81,23 @@ $(
      * loadFeed finished executing there is at least
      * a single .entry element within the .feed container. */
     describe('Initial Entries', function() {
+      let entries;
       // ensure feeds have loaded asynchonously
       // before running any tests in this suite
       beforeEach(function(done) {
         try {
-          loadFeed(1, done);
+          loadFeed(1, function() {
+            // Get the number of entries
+            entries = document.querySelectorAll('.feed .entry').length;
+            done();
+          });
         } catch (error) {
           // Handle errors gracefully
-          done();
           alert(`${error}${arrayIndexOutOfBounds}`);
         }
       });
       it('gets at least one entry into the feed container', function(done) {
-        let entries = $('.feed .entry').size(); // Get the number of entries
-        if (entries === 0) {
+        if (entries === 0 || entries === undefined) {
           // Handle the case for zero entries
           alert(noEntry);
         } else {
@@ -101,46 +108,40 @@ $(
       });
     });
 
-    // define variables to hold the feed selection
-    let prevFeedData, newFeedData;
-
     /* 'New Feed Selection' test suite when a new feed is loaded
      * by the loadFeed function that the content actually changes */
+    let initFeedSelection, newFeedSelection;
     describe('New Feed Selection', function() {
       // get feeds to simulate changes
       beforeEach(function(done) {
         try {
-          // load new feeds to change the content
-          loadFeed(2, function() {
-            // grab current feeds
-            prevFeedData = $('.feed').html();
+          loadFeed(0, function() {
+            initFeedSelection = feed.innerHTML;
             try {
-              loadFeed(3, function() {
-                // grab new feeds
-                newFeedData = $('.feed').html();
+              loadFeed(1, function() {
                 done();
               });
             } catch (error) {
-              done();
-              alert(`${error}${arrayIndexOutOfBounds}`);
+              alert(`${error}\nFailed to load the second set of feeds.${arrayIndexOutOfBounds}`);
             }
-            done();
           });
         } catch (error) {
-          done();
-          alert(`${error}${arrayIndexOutOfBounds}`);
+          alert(`${error}\nFailed to load the first set of feeds.${arrayIndexOutOfBounds}`);
         }
       });
       it('ensures the content actually changes', function(done) {
+        newFeedSelection = feed.innerHTML;
+        console.log('old feeds:\n', initFeedSelection);
+        console.log('new feeds:\n', newFeedSelection);
         if (
-          prevFeedData === undefined &&
-          newFeedData === undefined
+          initFeedSelection === undefined ||
+          newFeedSelection === undefined
         ) {
           // make sure feed selection is defined prior to running test
           alert(undefinedVariables);
         } else {
           // expect feed container to not be the same again
-          expect(newFeedData).not.toBe(prevFeedData);
+          expect(newFeedSelection).not.toBe(initFeedSelection);
         }
         done();
       });
