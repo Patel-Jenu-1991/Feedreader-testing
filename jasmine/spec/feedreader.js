@@ -63,6 +63,14 @@ $(
       });
     });
 
+    // define letiables to hold error messages
+    let {arrayIndexOutOfBounds, undefinedVariables, noEntry} = {
+      arrayIndexOutOfBounds: `\nNote: loadFeed may only accept numbers 0 to 3 inclusive.\nPlease try again!`,
+      undefinedVariables:
+        'Error: Check for undefined variables. Please try again!\nCannot ensure content actually changes upon New Feed Selection!',
+      noEntry: 'No entries were found!'
+    };
+
     /* 'Initial Entries' test suite ensures when the
      * loadFeed finished executing there is at least
      * a single .entry element within the .feed container. */
@@ -90,6 +98,9 @@ $(
         done(); // make sure to invoke the callback to avoid Timeout error
       });
     });
+
+    // define variables to hold the feed selection
+    let prevFeedData, newFeedData;
 
     /* 'New Feed Selection' test suite when a new feed is loaded
      * by the loadFeed function that the content actually changes */
