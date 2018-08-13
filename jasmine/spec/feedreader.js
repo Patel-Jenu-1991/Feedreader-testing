@@ -86,7 +86,7 @@ $(
       // before running any tests in this suite
       beforeEach(function(done) {
         try {
-          loadFeed(1, function() {
+          loadFeed(9, function() {
             // Get the number of entries
             entries = document.querySelectorAll('.feed .entry').length;
             done();
@@ -131,8 +131,6 @@ $(
       });
       it('ensures the content actually changes', function(done) {
         newFeedSelection = feed.innerHTML;
-        console.log('old feeds:\n', initFeedSelection);
-        console.log('new feeds:\n', newFeedSelection);
         if (
           initFeedSelection === undefined ||
           newFeedSelection === undefined
