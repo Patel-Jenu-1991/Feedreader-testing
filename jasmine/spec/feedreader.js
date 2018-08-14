@@ -93,6 +93,7 @@ $(
           });
         } catch (error) {
           // Handle errors gracefully
+          done();
           alert(`${error}${arrayIndexOutOfBounds}`);
         }
       });
@@ -115,22 +116,24 @@ $(
       // get feeds to simulate changes
       beforeEach(function(done) {
         try {
-          loadFeed(0, function() {
+          loadFeed(2, function() {
             initFeedSelection = feed.innerHTML;
             try {
-              loadFeed(1, function() {
+              loadFeed(3, function() {
+                newFeedSelection = feed.innerHTML;
                 done();
               });
             } catch (error) {
+              done();
               alert(`${error}\nFailed to load the second set of feeds.${arrayIndexOutOfBounds}`);
             }
           });
         } catch (error) {
+          done();
           alert(`${error}\nFailed to load the first set of feeds.${arrayIndexOutOfBounds}`);
         }
       });
       it('ensures the content actually changes', function(done) {
-        newFeedSelection = feed.innerHTML;
         if (
           initFeedSelection === undefined ||
           newFeedSelection === undefined
